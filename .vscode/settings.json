@@ -1,0 +1,18 @@
+{
+  "[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+  "prettier.tabWidth": 2,
+	"vetur.format.defaultFormatter.html": "prettier",
+  "prettier.useTabs": true,
+  "endOfLine": "auto",
+}
