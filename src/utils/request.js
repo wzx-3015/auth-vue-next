@@ -4,12 +4,13 @@
  * 默认全局处理异常告警(可通过请求参数handlerErr 进行单独配置)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-20 09:14:52
- * @LastEditTime: 2021-08-16 09:14:05
+ * @LastEditTime: 2021-09-07 17:01:42
  * @LastEditors: @Xin (834529118@qq.com)
  */
 import Axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { handleRequestTokenElMessageBoxConfirm } from './index'
+import { ref } from 'vue'
 // 产品名称
 const VUE_APP_NAME = process.env.VUE_APP_NAME
 // 版本号
@@ -173,6 +174,30 @@ export const get = (url, params, config) =>
     params,
     ...config,
   })
+
+/**
+ * @description: 请求函数封装处理（增加loading）
+ * @param {Function} 请求函数
+ * @return {*}
+ */  
+export const useRequest = RequestFn => {
+  const loading = ref(false)
+
+  const run = (...rest) => {
+    try {
+      loading.value = true
+      return RequestFn(...rest).finally(() => (loading.value = false))
+    } catch (error) {
+      loading.value = false
+      return Promise.reject(error)
+    }
+  }
+
+  return [
+    loading,
+    run
+  ]
+}
 
 // 导出对应的POST  PUT  DELETE 请求快捷方式
 export const post = instance.post
