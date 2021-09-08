@@ -2,18 +2,18 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-09-06 17:53:11
- * @LastEditTime: 2021-09-08 16:59:35
+ * @LastEditTime: 2021-09-08 17:23:14
  * @LastEditors: @Xin (834529118@qq.com)
 -->
 <template>
   <div class="exception403">
-      <div class="exception403-content">
-        <img class="img" draggable="false" src="./assets/403.png" alt="" />
-        <p class="title">403 {{ tipData.text }}</p>
-        <el-button type="primary" size="medium" @click="handleLogin">
-          {{ tipData.btnText }}
-        </el-button>
-      </div>
+    <div class="exception403-content">
+      <img class="img" draggable="false" src="./assets/403.png" alt="" />
+      <p class="title">403 {{ tipData.text }}</p>
+      <el-button type="primary" size="medium" @click="handleLogin">
+        {{ tipData.btnText }}
+      </el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -23,7 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 export default {
   props: {
-    a: Boolean
+    a: Boolean,
   },
   setup() {
     const { origin } = window.location
@@ -51,7 +51,7 @@ export default {
 
     return {
       handleLogin,
-      tipData
+      tipData,
     }
   },
 }

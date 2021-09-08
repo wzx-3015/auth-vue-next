@@ -4,7 +4,7 @@
  * 默认全局处理异常告警(可通过请求参数handlerErr 进行单独配置)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-20 09:14:52
- * @LastEditTime: 2021-09-07 17:01:42
+ * @LastEditTime: 2021-09-08 17:23:19
  * @LastEditors: @Xin (834529118@qq.com)
  */
 import Axios from 'axios'
@@ -179,7 +179,7 @@ export const get = (url, params, config) =>
  * @description: 请求函数封装处理（增加loading）
  * @param {Function} 请求函数
  * @return {*}
- */  
+ */
 export const useRequest = RequestFn => {
   const loading = ref(false)
 
@@ -193,10 +193,7 @@ export const useRequest = RequestFn => {
     }
   }
 
-  return [
-    loading,
-    run
-  ]
+  return [loading, run]
 }
 
 // 导出对应的POST  PUT  DELETE 请求快捷方式
