@@ -2,16 +2,15 @@
  * @Description: 权限管模块(拦截路由进行路由的匹配以及添加)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-05-06 09:42:37
- * @LastEditTime: 2021-08-16 11:10:06
+ * @LastEditTime: 2021-09-08 16:59:07
  * @LastEditors: @Xin (834529118@qq.com)
  */
 
-import router, { constRoutes } from '@/router/index'
+import router, { asyncRoutes } from '@/router/index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from '@/store'
-import { ElLoading } from 'element-plus'
-import { openLoginPage, localStorageGetLoginToken, handleRequestTokenElMessageBoxConfirm } from './index'
+import { localStorageGetLoginToken, handleRequestTokenElMessageBoxConfirm } from './index'
 import { useRoute } from 'vue-router'
 import { isArray } from './validate'
 import { flatAsyncRoute } from '@/utils/index'
@@ -19,8 +18,12 @@ import { flatAsyncRoute } from '@/utils/index'
 const LOGINAUTH = process.env.VUE_APP_LOGIN_AUTH
 
 // 开放路由配置项
-const notLoginExclude = ['404', '403', 'redirect']
-const notLoginRoutes = flatAsyncRoute(constRoutes.filter(v => !notLoginExclude.includes(v.name))).map(v => v.name)
+// const notLoginExclude = ['404', '403', 'redirect']
+// const notLoginRoutes = flatAsyncRoute(constRoutes.filter(v => !notLoginExclude.includes(v.name))).map(v => v.name)
+
+// 开放路由
+// const notLoginRoutesName = [...new Set(flatAsyncRoute(constRoutes).map(v => v.name))]
+const asynLogincRoutesPath = [...new Set(flatAsyncRoute(asyncRoutes).map(v => v.path).filter(v => v))]
 
 /**
  * @description:  添加路由
@@ -32,76 +35,80 @@ const addRoutes = (Router, routes) => {
   routes.forEach(v => {
     Router.addRoute(v)
   })
+
+  return Promise.resolve()
 }
 
 // 路由拦截处理
 router.beforeEach((to, from, next) => {
   NProgress.start()
 
-  const loadingInstance = ElLoading.service({
-    text: '资源加载中...',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)',
-    fullscreen: true,
-  })
-
-  // 如果设置为开发模式则不进行路由的动态添加以及登录逻辑的校验 || 开放性路由
-  if (LOGINAUTH === 'false' || notLoginRoutes.includes(to.name)) {
+  // 开发模式开放所有路由
+  if (LOGINAUTH === 'false') {
     NProgress.done()
-    loadingInstance.close()
     next()
-    return
+    return true
   }
 
-  // login 不存在代表未登录或者刷新
-  if (!store.state.user.login) {
-    // ak参数存在  处理登录逻辑
-    if (to.query.ak) {
-      const { ak, ...rest } = to.query
-      store
-        .dispatch('user/Login', { ak })
-        .then(() => {
-          // 获取用户信息
+  // 访问权限模块
+  if (asynLogincRoutesPath.includes(to.path)) {
+    console.log(store.state.user.login)
+    // login 不存在代表未登录或者刷新
+    if (!store.state.user.login) {
+      // ak参数存在  处理登录逻辑
+      if (to.query.ak) {
+        const { ak, ...rest } = to.query
+        store
+          .dispatch('user/Login', { ak })
+          .then(() => {
+            // 获取用户信息
+            store
+              .dispatch('user/GetUserInfo')
+              .then(() => {
+                NProgress.done()
+                addRoutes(router, store.state.user.addRoutes)
+
+                // 解决新增route不生效
+                next({ path: to.path, query: { ...rest }, params: to.params, replace: true })
+              })
+              .catch(err => {
+                handleRequestTokenElMessageBoxConfirm(err.message, '登录异常', window.location.href.replace(/\?ak=(\S*)/, ''))
+              })
+          })
+          .catch(err => {
+            handleRequestTokenElMessageBoxConfirm(err.message, '登录异常', window.location.href.replace(/\?ak=(\S*)/, ''))
+          })
+      } else {
+        // TOKEN 不存在代表为第一次登录
+        if (!localStorageGetLoginToken()) {
+          next({ name: '403' })
+        } else {
           store
             .dispatch('user/GetUserInfo')
             .then(() => {
-              NProgress.done()
-              loadingInstance.close()
-              addRoutes(router, store.state.user.addRoutes)
-
-              // 解决新增route不生效
-              next({ path: to.path, query: { ...rest }, params: to.params, replace: true })
+              addRoutes(router, store.state.user.addRoutes).then(() => {
+                console.log('=============================================')
+                next({ path: to.path, query: to.query, params: to.params, replace: true })
+              })
             })
             .catch(err => {
-              handleRequestTokenElMessageBoxConfirm(err.message, '登录异常', window.location.href.replace(/\?ak=(\S*)/, ''))
+              handleRequestTokenElMessageBoxConfirm(err.message, '获取信息异常,请重新登录', window.location.href)
             })
-        })
-        .catch(err => {
-          handleRequestTokenElMessageBoxConfirm(err.message, '登录异常', window.location.href.replace(/\?ak=(\S*)/, ''))
-        })
-    } else {
-      // TOKEN 不存在代表为第一次登录
-      if (!localStorageGetLoginToken()) {
-        openLoginPage()
-      } else {
-        store
-          .dispatch('user/GetUserInfo')
-          .then(() => {
-            addRoutes(router, store.state.user.addRoutes)
-
-            NProgress.done()
-
-            next({ path: to.path, query: to.query, params: to.params, replace: true })
-          })
-          .catch(err => {
-            handleRequestTokenElMessageBoxConfirm(err.message, '获取信息异常,请重新登录', window.location.href)
-          })
-          .finally(() => loadingInstance.close())
+            .finally(() => NProgress.done())
+        }
       }
+    } else {
+      NProgress.done()
+      if (to.params.pathMatch && !router.hasRoute(to.params.pathMatch[0])) {
+        next({ name: '403', query: {
+          voidStatus: 1
+        }, replace: true})
+        return true
+      }
+      console.log('放行')
+      next()
     }
   } else {
-    NProgress.done()
-    loadingInstance.close()
     next()
   }
 })

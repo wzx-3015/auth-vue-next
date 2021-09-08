@@ -2,10 +2,10 @@
  * @Description: vue.config.js
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 11:04:04
- * @LastEditTime: 2021-04-30 16:50:46
+ * @LastEditTime: 2021-09-08 15:48:14
  * @LastEditors: @Xin (834529118@qq.com)
  */
-const api = 'http://192.168.10.126:8081'
+const api = 'http://192.168.11.144:8801'
 
 const ZipPlugin = require('zip-webpack-plugin')
 const isProduction = process.env.NODE_ENV === 'production'

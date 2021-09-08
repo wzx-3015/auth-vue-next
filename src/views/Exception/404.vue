@@ -2,13 +2,13 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-03-01 09:44:26
- * @LastEditTime: 2021-05-08 09:37:48
+ * @LastEditTime: 2021-09-08 16:08:44
  * @LastEditors: @Xin (834529118@qq.com)
 -->
 <template>
   <div class="exception404">
     <div class="exception404-content">
-      <img class="img" draggable="false" src="./assets/bck.png" alt="" />
+      <img class="img" draggable="false" src="./assets/404.png" alt="" />
       <p class="title">404! 出错啦!</p>
       <p class="two-title">您访问的页面已离开了地球</p>
     </div>
