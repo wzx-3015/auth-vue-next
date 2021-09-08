@@ -2,7 +2,7 @@
  * @Description: 权限管模块(拦截路由进行路由的匹配以及添加)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-05-06 09:42:37
- * @LastEditTime: 2021-09-08 16:59:07
+ * @LastEditTime: 2021-09-08 17:25:00
  * @LastEditors: @Xin (834529118@qq.com)
  */
 
@@ -17,14 +17,14 @@ import { flatAsyncRoute } from '@/utils/index'
 
 const LOGINAUTH = process.env.VUE_APP_LOGIN_AUTH
 
-// 开放路由配置项
-// const notLoginExclude = ['404', '403', 'redirect']
-// const notLoginRoutes = flatAsyncRoute(constRoutes.filter(v => !notLoginExclude.includes(v.name))).map(v => v.name)
-
-// 开放路由
-// const notLoginRoutesName = [...new Set(flatAsyncRoute(constRoutes).map(v => v.name))]
-const asynLogincRoutesPath = [...new Set(flatAsyncRoute(asyncRoutes).map(v => v.path).filter(v => v))]
-
+// 权限路由配置信息
+const asynLogincRoutesPath = Array.from(
+  new Set(
+    flatAsyncRoute(asyncRoutes)
+      .map(v => v.path)
+      .filter(v => v)
+  )
+)
 /**
  * @description:  添加路由
  * @param {Router} Router 路由实例
@@ -52,7 +52,6 @@ router.beforeEach((to, from, next) => {
 
   // 访问权限模块
   if (asynLogincRoutesPath.includes(to.path)) {
-    console.log(store.state.user.login)
     // login 不存在代表未登录或者刷新
     if (!store.state.user.login) {
       // ak参数存在  处理登录逻辑
@@ -87,7 +86,6 @@ router.beforeEach((to, from, next) => {
             .dispatch('user/GetUserInfo')
             .then(() => {
               addRoutes(router, store.state.user.addRoutes).then(() => {
-                console.log('=============================================')
                 next({ path: to.path, query: to.query, params: to.params, replace: true })
               })
             })
@@ -100,12 +98,9 @@ router.beforeEach((to, from, next) => {
     } else {
       NProgress.done()
       if (to.params.pathMatch && !router.hasRoute(to.params.pathMatch[0])) {
-        next({ name: '403', query: {
-          voidStatus: 1
-        }, replace: true})
+        next({ name: '403', query: { voidStatus: 1 }, replace: true })
         return true
       }
-      console.log('放行')
       next()
     }
   } else {
