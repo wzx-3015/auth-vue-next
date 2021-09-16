@@ -2,7 +2,7 @@
  * @Description: 常用的正则校验
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-23 18:08:42
- * @LastEditTime: 2021-05-11 18:35:14
+ * @LastEditTime: 2021-09-11 09:32:47
  * @LastEditors: @Xin (834529118@qq.com)
  */
 
@@ -69,26 +69,4 @@ export function validEmail(email) {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   // const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return reg.test(email)
-}
-
-/**
- * @param {string} str
- * @returns {Boolean}
- */
-export function isString(str) {
-  if (typeof str === 'string' || str instanceof String) {
-    return true
-  }
-  return false
-}
-
-/**
- * @param {Array} arg
- * @returns {Boolean}
- */
-export function isArray(arg) {
-  if (typeof Array.isArray === 'undefined') {
-    return Object.prototype.toString.call(arg) === '[object Array]'
-  }
-  return Array.isArray(arg)
 }

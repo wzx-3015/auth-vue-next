@@ -2,7 +2,7 @@
  * @Description: 权限管模块(拦截路由进行路由的匹配以及添加)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-05-06 09:42:37
- * @LastEditTime: 2021-09-08 17:25:00
+ * @LastEditTime: 2021-09-11 09:32:41
  * @LastEditors: @Xin (834529118@qq.com)
  */
 
@@ -10,10 +10,9 @@ import router, { asyncRoutes } from '@/router/index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from '@/store'
-import { localStorageGetLoginToken, handleRequestTokenElMessageBoxConfirm } from './index'
 import { useRoute } from 'vue-router'
-import { isArray } from './validate'
-import { flatAsyncRoute } from '@/utils/index'
+import { isArray } from 'lodash-es'
+import { flatAsyncRoute, localStorageGetLoginToken, handleRequestTokenElMessageBoxConfirm } from '@/utils/index'
 
 const LOGINAUTH = process.env.VUE_APP_LOGIN_AUTH
 

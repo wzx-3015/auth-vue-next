@@ -2,10 +2,10 @@
  * @Description: 权限指令
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-30 10:36:56
- * @LastEditTime: 2021-06-29 09:27:42
+ * @LastEditTime: 2021-09-11 13:59:49
  * @LastEditors: @Xin (834529118@qq.com)
  */
-import { isArray } from '@/utils/validate.js'
+import { isArray } from 'lodash-es'
 
 export default {
   // 指令是具有一组生命周期的钩子：
