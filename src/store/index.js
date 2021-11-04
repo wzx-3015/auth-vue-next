@@ -2,7 +2,7 @@
  * @Description: Store 入口文件
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 10:05:00
- * @LastEditTime: 2021-05-14 16:07:11
+ * @LastEditTime: 2021-11-04 13:46:42
  * @LastEditors: @Xin (834529118@qq.com)
  */
 import { createStore } from 'vuex'
@@ -22,27 +22,6 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 export default createStore({
-  getters: {
-    /**
-     * @description:   获取指定name的导航数据
-     * @param {String} name  路由Name属性
-     * @return {Array}
-     */
-    getChildrenMenus: state => name => {
-      const menu = state.user.flatMenus.find(v => v.name === name)
-      return menu ? menu.children || [] : []
-    },
-    /**
-     * @description: 获取导航菜单
-     * @param {*}
-     * @return {*}
-     */
-    getMenus: state => {
-      return state.user.menus
-    },
-    getTodoById: () => () => {
-      return ''
-    },
-  },
+  getters: {},
   modules,
 })
