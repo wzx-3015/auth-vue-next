@@ -2,7 +2,7 @@
  * @Description: vue.config.js
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 11:04:04
- * @LastEditTime: 2021-09-08 15:48:14
+ * @LastEditTime: 2022-03-14 17:34:57
  * @LastEditors: @Xin (834529118@qq.com)
  */
 const api = 'http://192.168.11.144:8801'
@@ -24,6 +24,13 @@ module.exports = {
         onProxyRes: cookiePathRewriter,
         pathRewrite: {
           ['^' + VUE_APP_REQUEST_API]: VUE_APP_REQUEST_API,
+        },
+      },
+      '/api': {
+        target: api,
+        onProxyRes: cookiePathRewriter,
+        pathRewrite: {
+          '^api': '/api',
         },
       },
     },

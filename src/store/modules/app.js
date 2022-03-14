@@ -2,7 +2,7 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-27 16:19:07
- * @LastEditTime: 2021-05-10 10:59:59
+ * @LastEditTime: 2022-03-14 17:35:20
  * @LastEditors: @Xin (834529118@qq.com)
  */
 const state = () => ({
@@ -27,7 +27,6 @@ const mutations = {
 }
 const actions = {
   increment({ commit }, payload) {
-    console.log('actionsParams', payload)
     commit('increment')
   },
 }
