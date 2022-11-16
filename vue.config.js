@@ -2,7 +2,7 @@
  * @Description: vue.config.js
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 11:04:04
- * @LastEditTime: 2022-03-14 17:34:57
+ * @LastEditTime: 2022-11-15 10:06:49
  * @LastEditors: @Xin (834529118@qq.com)
  */
 const api = 'http://192.168.11.144:8801'
@@ -17,7 +17,6 @@ const VUE_APP_NAME = process.env.VUE_APP_NAME
 
 module.exports = {
   devServer: {
-    disableHostCheck: true,
     proxy: {
       [VUE_APP_REQUEST_API]: {
         target: api,

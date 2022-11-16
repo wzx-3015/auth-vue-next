@@ -2,7 +2,7 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 10:06:21
- * @LastEditTime: 2021-08-31 09:25:29
+ * @LastEditTime: 2022-11-14 17:55:58
  * @LastEditors: @Xin (834529118@qq.com)
 -->
 # 通用平台前端脚手架
@@ -48,11 +48,6 @@ hasPermission(['PUT', 'GET'])
 
 
 所有关于用户的信息全部存储在store  user模块下(导航栏信息, 名称),业务使用需自行展示处理
-
-提供获取指定RouteName子导航列表
-import useStoreAuxiliary from '@/plugins/useStoreAuxiliary'
-const { getGetters } = useStoreAuxiliary()
-示例: getGetters('getChildrenMenus')('About')
 ```
 
 
@@ -104,7 +99,6 @@ git config --global core.autocrlf false
 │  ├─ plugins                                 // 插件
 │  │  ├─ echarts.js                           // 可视化图表类库(按需加载请自行引用)
 │  │  ├─ elementUI.js                         // elementUI插件库(目前以全局引用,可进行按需引用需自行调整)
-│  │  └─ useStoreAuxiliary.js                 // Vux 使用辅助库
 │  ├─ router                                  // 路由文件
 │  │  └─ index.js                             
 │  ├─ store                                   // vuex Store信息

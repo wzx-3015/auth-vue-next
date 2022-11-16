@@ -2,7 +2,7 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-05-06 16:51:38
- * @LastEditTime: 2021-11-04 13:47:18
+ * @LastEditTime: 2022-11-14 17:58:24
  * @LastEditors: @Xin (834529118@qq.com)
 -->
 <template>
@@ -15,14 +15,11 @@
 
 <script>
 import { useRoute, useRouter } from 'vue-router'
-import useStoreAuxiliary from '@/plugins/useStoreAuxiliary'
 
 export default {
-  name: 'Home',
+  name: 'HomePage',
   setup() {
     const router = useRouter()
-
-    const { dispatchActions, getGetters } = useStoreAuxiliary()
 
     console.log(useRoute().params)
 
@@ -30,11 +27,7 @@ export default {
       router.push({ name: 'About' })
     }
 
-    const handleLogOut = () => {
-      dispatchActions('user/Logout')
-    }
-
-    console.log('getMenus', getGetters('getChildrenMenus')('About'))
+    const handleLogOut = () => {}
 
     return {
       handleCilck,

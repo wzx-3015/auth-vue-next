@@ -2,7 +2,7 @@
  * @Description: 异步加载路由 (根据权限管理系统返回的modules模块进行匹配添加)
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-11-04 13:51:30
- * @LastEditTime: 2021-11-04 13:52:42
+ * @LastEditTime: 2022-11-14 17:57:00
  * @LastEditors: @Xin (834529118@qq.com)
  */
 import HomeLayout from '@/layout/HomeLayout.vue'
@@ -31,21 +31,6 @@ const asyncRoutes = [
         path: '/banner-config',
         name: 'BannerConfig',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home/index.vue'),
-      },
-    ],
-  },
-  {
-    path: '/about',
-    component: HomeLayout,
-    name: 'AboutLayout',
-    children: [
-      {
-        path: '',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '@/views/About/index.vue'),
       },
     ],
   },

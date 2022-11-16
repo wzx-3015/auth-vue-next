@@ -2,7 +2,7 @@
  * @Description: 系统入口文件
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-04-19 10:05:00
- * @LastEditTime: 2021-11-04 13:53:15
+ * @LastEditTime: 2022-11-14 17:10:13
  * @LastEditors: @Xin (834529118@qq.com)
  */
 import { createApp } from 'vue'
@@ -17,6 +17,7 @@ import 'element-plus/dist/index.css'
 import { dfsjUnifyAuth } from 'dfsj-auth'
 
 const app = createApp(App)
+const { LOGINAUTH, LOGINPATH } = window.authConfig || {}
 
 app
   .use(store)
@@ -25,8 +26,8 @@ app
   .use(ElementPlus)
   .use(dfsjUnifyAuth, {
     systemName: process.env.VUE_APP_SYSTEM_NAME,
-    loginAuth: process.env.VUE_APP_LOGIN_AUTH,
+    loginAuth: LOGINAUTH,
     asyncRoutes,
-    loginPath: process.env.VUE_APP_LOGINPATH,
+    loginPath: LOGINPATH,
   })
   .mount('#app')

@@ -2,7 +2,7 @@
  * @Description: 请输入当前文件描述
  * @Author: @Xin (834529118@qq.com)
  * @Date: 2021-05-06 17:47:26
- * @LastEditTime: 2021-05-14 15:26:42
+ * @LastEditTime: 2022-11-14 17:57:36
  * @LastEditors: @Xin (834529118@qq.com)
 -->
 <template>
@@ -25,37 +25,24 @@
 </template>
 
 <script>
-import useStoreAuxiliary from '@/plugins/useStoreAuxiliary'
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'HomeLayout',
   setup() {
-    const { getStoreState } = useStoreAuxiliary()
-
-    const Router = useRouter()
     const route = useRoute()
 
     console.log('route', route)
 
-    const state = getStoreState('user')
-
     const defaultActive = computed(() => String(route.meta.id))
-
-    console.log(state.menus)
 
     const handleMenuSelect = index => {
       console.log(index)
-      const findMenu = state.menus.find(v => v.meta.id === Number(index))
-
-      if (findMenu) {
-        Router.push({ name: findMenu.name })
-      }
     }
 
     return {
-      menus: state.menus,
+      menus: [],
       handleMenuSelect,
       defaultActive,
     }
